@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CodeSharing.View.MyWorkspace"
+             BackgroundColor="#181818">
+    <NavigationPage.TitleView>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="New Block" WidthRequest="150" HeightRequest="40" BackgroundColor="Transparent" 
+                        TextColor="#188904" FontSize="20" FontAttributes="Bold"
+                        VerticalOptions="CenterAndExpand" HorizontalOptions="Start" Margin="10, 5, 10, 5"
+                        Clicked="NewBlock" />
+                <Button Text="Login" WidthRequest="100" HeightRequest="40" BackgroundColor="Transparent" FontAttributes="Bold"
+                        VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Margin="10, 5, 10, 5" />
+            </StackLayout>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Code Sharing Workspace" FontSize="Large" FontAttributes="Bold" TextColor="#80808073" 
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

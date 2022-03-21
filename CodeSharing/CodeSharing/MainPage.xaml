@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FlyoutPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CodeSharing.View"
+             Title="Initial"
+             x:Class="CodeSharing.MainPage">
+
+    <!--<FlyoutPage.ToolbarItems>
+        <ToolbarItem Text="Teste" />
+    </FlyoutPage.ToolbarItems>-->
+    
+    <FlyoutPage.Flyout>
+        <local:Menu x:Name="pageMenu" />
+    </FlyoutPage.Flyout>
+
+    <FlyoutPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <local:MyWorkspace />
+            </x:Arguments>
+        </NavigationPage>
+    </FlyoutPage.Detail>
+
+</FlyoutPage>
