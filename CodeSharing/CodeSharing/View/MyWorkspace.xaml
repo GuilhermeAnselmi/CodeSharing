@@ -18,6 +18,24 @@
 
     <ContentPage.Content>
         <StackLayout>
+            <ListView>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Margin="50">
+                                <Frame BorderColor="Black" HasShadow="True" CornerRadius="3" BackgroundColor="#0000007a" Padding="10">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label x:Name="test" Text="Teste" FontSize="20" FontAttributes="Bold" TextColor="#bfbebe"
+                                            HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
+                                        <Button Text="Expand" WidthRequest="100" />
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
             <Label Text="Code Sharing Workspace" FontSize="Large" FontAttributes="Bold" TextColor="#80808073" 
                        VerticalOptions="CenterAndExpand" 
                        HorizontalOptions="CenterAndExpand" />

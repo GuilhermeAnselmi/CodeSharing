@@ -19,6 +19,8 @@ namespace CodeSharing.View
         public MyWorkspace()
         {
             InitializeComponent();
+
+            
         }
 
         private void NewBlock(object sender, EventArgs e)
