@@ -20,7 +20,11 @@ namespace CodeSharing.View
         {
             InitializeComponent();
 
-            
+            JsonDb db = new JsonDb();
+
+            MyBlock[] block = db.ListAllBlocks();
+
+            lstBlocks.ItemsSource = block;
         }
 
         private void NewBlock(object sender, EventArgs e)
@@ -35,54 +39,20 @@ namespace CodeSharing.View
 
             if (block != "" && block != null)
             {
-                MyCode code = new MyCode(block);
-                code.CreateBlock();
+                Tuple<bool, string> response = null;
 
-                DisplayAlert("Block Created", "New block created succesafully", "OK");
+                JsonDb db = new JsonDb();
+                response = db.CreateBlock(block);
+
+                DisplayAlert(response.Item1 ? "Block Created" : "Block Not Created", response.Item2, "OK");
             }
         }
 
-        private void CreateJsonSave()
+        private void Expand(object sender, EventArgs e)
         {
-            List<MyBlock> mb = new List<MyBlock>();
+            ((Button)sender).CommandParameter.ToString();
 
-            string[] codes =
-            {
-                "Console.WriteLine(\"Hello World!\")",
-                "var test = Console.ReadLine()"
-            };
-
-            string[] codes2 =
-            {
-                "Console.WriteLine(\"Hello World!\")",
-                "var test = Console.ReadLine()"
-            };
-
-            string[] codes3 =
-            {
-                "Console.WriteLine(\"Hello World!\")",
-                "var test = Console.ReadLine()"
-            };
-
-            List<MyBlock> blocks = new List<MyBlock>();
-            blocks.Add(new MyBlock { BlockName = "MongoDB", CodeList = codes });
-            blocks.Add(new MyBlock { BlockName = "Test2", CodeList = codes2 });
-            blocks.Add(new MyBlock { BlockName = "Test3", CodeList = codes3 });
-
-            mb = blocks;
-
-            string json = JsonConvert.SerializeObject(blocks);
-
-            string fileName = "Coding.json";
-            string path = Path.GetTempPath() + fileName;
-
-            if (!File.Exists(path))
-            {
-                var file = File.Create(path);
-                file.Close();
-            }
-
-            File.WriteAllText(path, json);
+            StackLayout obj = (StackLayout)FindByName("Test");
         }
     }
 }

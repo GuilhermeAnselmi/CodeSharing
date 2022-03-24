@@ -18,23 +18,27 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <ListView>
-                <ListView.ItemTemplate>
+            <CollectionView x:Name="lstBlocks" Margin="50">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Margin="50">
-                                <Frame BorderColor="Black" HasShadow="True" CornerRadius="3" BackgroundColor="#0000007a" Padding="10">
+                        <StackLayout Margin="0, 30, 0, 30">
+                            <Frame BorderColor="Black" HasShadow="True" CornerRadius="3" BackgroundColor="#0000007a" Padding="10">
+                                <StackLayout>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label x:Name="test" Text="Teste" FontSize="20" FontAttributes="Bold" TextColor="#bfbebe"
-                                            HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
-                                        <Button Text="Expand" WidthRequest="100" />
+                                        <Label Text="{Binding BlockName}" FontSize="20" FontAttributes="Bold" TextColor="#bfbebe"
+                                                HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
+                                        <Button Text="Expand" Clicked="Expand" CommandParameter="{Binding BlockName}" WidthRequest="100" />
                                     </StackLayout>
-                                </Frame>
-                            </StackLayout>
-                        </ViewCell>
+
+                                    <StackLayout x:Name="{Binding BlockName}" IsVisible="False">
+                                        <Entry Keyboard="Text" Text="{Binding Code}" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <Label Text="Code Sharing Workspace" FontSize="Large" FontAttributes="Bold" TextColor="#80808073" 
                        VerticalOptions="CenterAndExpand" 
