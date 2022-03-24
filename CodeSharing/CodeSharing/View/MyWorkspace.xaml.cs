@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -50,9 +51,9 @@ namespace CodeSharing.View
 
         private void Expand(object sender, EventArgs e)
         {
-            ((Button)sender).CommandParameter.ToString();
+            StackLayout objCode = (StackLayout)((Button)sender).Parent.Parent.LogicalChildren[1];
 
-            StackLayout obj = (StackLayout)FindByName("Test");
+            objCode.IsVisible = !objCode.IsVisible;
         }
     }
 }
