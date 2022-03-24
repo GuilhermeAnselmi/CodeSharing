@@ -31,7 +31,7 @@
                                     </StackLayout>
 
                                     <StackLayout x:Name="{Binding BlockName}" IsVisible="False">
-                                        <Entry Keyboard="Text" Text="{Binding Code}" />
+                                        <Editor Text="{Binding Code}" AutoSize="TextChanges" />
                                     </StackLayout>
                                 </StackLayout>
                             </Frame>
