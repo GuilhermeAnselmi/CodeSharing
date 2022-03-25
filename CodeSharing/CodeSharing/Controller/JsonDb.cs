@@ -43,7 +43,7 @@ namespace CodeSharing.Controller
             
                 List<MyBlock> blocks = new List<MyBlock>();
                 if (mbs != null) blocks = mbs;
-                blocks.Add(new MyBlock() { BlockName = blockName, CodeList = new string[] { "" } });
+                blocks.Add(new MyBlock() { BlockName = blockName, CodeList = "" });
 
                 mbs = blocks;
 
@@ -107,6 +107,33 @@ namespace CodeSharing.Controller
             {
                 return block;
             }
+        }
+
+        public Tuple<bool, string> CodeChanges(string blockName, string code)
+        {
+            Tuple<bool, string> response = new Tuple<bool, string>(false, "File Not Found");
+
+            try
+            {
+                if (File.Exists(FilePath))
+                {
+                    List<MyBlock> mbs = new List<MyBlock>();
+
+                    mbs = JsonConvert.DeserializeObject<List<MyBlock>>(File.ReadAllText(FilePath));
+
+                    mbs.Where<MyBlock>(x => x.BlockName == blockName).First().CodeList = code;
+
+                    File.WriteAllText(FilePath, JsonConvert.SerializeObject(mbs));
+
+                    response = new Tuple<bool, string>(true, "");
+                }
+            }
+            catch (Exception ex)
+            {
+                response = new Tuple<bool, string>(false, "Error: " + ex);
+            }
+
+            return response;
         }
     }
 }

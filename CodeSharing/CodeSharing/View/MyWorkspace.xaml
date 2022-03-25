@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:tool="http://xamarin.com/schemas/2020/toolkit"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CodeSharing.View.MyWorkspace"
              BackgroundColor="#181818">
@@ -31,9 +32,37 @@
                                     </StackLayout>
 
                                     <StackLayout x:Name="{Binding BlockName}" IsVisible="False">
-                                        <Editor Text="{Binding Code}" AutoSize="TextChanges" />
+                                        <Button Text="Edit" Clicked="OpenCodeEditor" />
+
+                                        <Editor x:Name="{Binding BlockName}" Text="{Binding CodeList}" IsSpellCheckEnabled="False" FontSize="16"
+                                                AutoSize="TextChanges" Unfocused="SaveChanges" IsVisible="False" />
+
+                                        <Label Text="{Binding CodeList}" />
                                     </StackLayout>
                                 </StackLayout>
+
+                                <!--<tool:Expander Margin="10">
+                                    <tool:Expander.Header>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding BlockName}" FontSize="20" FontAttributes="Bold" TextColor="#bfbebe"
+                                                HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
+                                        </StackLayout>
+                                    </tool:Expander.Header>
+                                    <tool:Expander.Content>
+                                        <StackLayout>
+                                            <ImageButton Source="Save.png" Clicked="OpenCodeEditor" IsVisible="False"
+                                                         WidthRequest="30" HeightRequest="30" />
+                                            <ImageButton Source="Edit.png" Clicked="OpenCodeEditor"
+                                                         WidthRequest="30" HeightRequest="30" />
+                                            
+                                            <Editor x:Name="{Binding BlockName}" Text="{Binding CodeList}" IsSpellCheckEnabled="False" FontSize="16"
+                                                    AutoSize="TextChanges" Unfocused="SaveChanges" IsVisible="False" />
+
+                                            
+                                            <Label Text="{Binding CodeList}" />
+                                        </StackLayout>
+                                    </tool:Expander.Content>
+                                </tool:Expander>-->
                             </Frame>
                         </StackLayout>
                     </DataTemplate>

@@ -7,6 +7,6 @@ namespace CodeSharing.Model
     internal class MyBlock
     {
         public string BlockName { get; set; }
-        public string[] CodeList { get; set; }
+        public string CodeList { get; set; }
     }
 }
