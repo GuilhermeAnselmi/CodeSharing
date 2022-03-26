@@ -10,8 +10,6 @@ namespace CodeSharing
         {
             InitializeComponent();
 
-            Device.SetFlags(new string[] { "Expander_Experimental" });
-
             MainPage = new MainPage();
         }
 

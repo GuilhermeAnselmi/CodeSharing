@@ -5,73 +5,69 @@
              x:Class="CodeSharing.View.MyWorkspace"
              BackgroundColor="#181818">
     <NavigationPage.TitleView>
-        <StackLayout>
+        <StackLayout HeightRequest="70">
             <StackLayout Orientation="Horizontal">
-                <Button Text="New Block" WidthRequest="150" HeightRequest="40" BackgroundColor="Transparent" 
-                        TextColor="#188904" FontSize="20" FontAttributes="Bold"
-                        VerticalOptions="CenterAndExpand" HorizontalOptions="Start" Margin="10, 5, 10, 5"
-                        Clicked="NewBlock" />
+                <Button Text="New Block" Margin="10, 5, 10, 5" WidthRequest="150" HeightRequest="40" 
+                        VerticalOptions="CenterAndExpand" HorizontalOptions="Start" Clicked="NewBlock">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BorderColor" Value="#188904" />
+                                    <Setter Property="TextColor" Value="#188904" />
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                    <Setter Property="FontSize" Value="20" />
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Button>
                 <Button Text="Login" WidthRequest="100" HeightRequest="40" BackgroundColor="Transparent" FontAttributes="Bold"
-                        VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Margin="10, 5, 10, 5" />
+                    VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Margin="10, 5, 10, 5" />
             </StackLayout>
         </StackLayout>
     </NavigationPage.TitleView>
 
     <ContentPage.Content>
         <StackLayout>
-            <CollectionView x:Name="lstBlocks" Margin="50">
-                <CollectionView.ItemTemplate>
+            <ListView x:Name="lstBlocks" Margin="50" SelectionMode="None">
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Margin="0, 30, 0, 30">
-                            <Frame BorderColor="Black" HasShadow="True" CornerRadius="3" BackgroundColor="#0000007a" Padding="10">
-                                <StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding BlockName}" FontSize="20" FontAttributes="Bold" TextColor="#bfbebe"
-                                                HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
-                                        <Button Text="Expand" Clicked="Expand" CommandParameter="{Binding BlockName}" WidthRequest="100" />
-                                    </StackLayout>
-
-                                    <StackLayout x:Name="{Binding BlockName}" IsVisible="False">
-                                        <Button Text="Edit" Clicked="OpenCodeEditor" />
-
-                                        <Editor x:Name="{Binding BlockName}" Text="{Binding CodeList}" IsSpellCheckEnabled="False" FontSize="16"
-                                                AutoSize="TextChanges" Unfocused="SaveChanges" IsVisible="False" />
-
-                                        <Label Text="{Binding CodeList}" />
-                                    </StackLayout>
-                                </StackLayout>
-
-                                <!--<tool:Expander Margin="10">
-                                    <tool:Expander.Header>
+                        <ViewCell>
+                            <StackLayout Margin="0, 30, 0, 30">
+                                <Frame BorderColor="Black" HasShadow="True" CornerRadius="3" BackgroundColor="#0000007a" Padding="10">
+                                    <StackLayout>
                                         <StackLayout Orientation="Horizontal">
                                             <Label Text="{Binding BlockName}" FontSize="20" FontAttributes="Bold" TextColor="#bfbebe"
-                                                HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
+                                                    HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
+                                            <Button Text="Expand" Clicked="Expand" CommandParameter="{Binding BlockName}" WidthRequest="100" />
                                         </StackLayout>
-                                    </tool:Expander.Header>
-                                    <tool:Expander.Content>
-                                        <StackLayout>
-                                            <ImageButton Source="Save.png" Clicked="OpenCodeEditor" IsVisible="False"
-                                                         WidthRequest="30" HeightRequest="30" />
-                                            <ImageButton Source="Edit.png" Clicked="OpenCodeEditor"
-                                                         WidthRequest="30" HeightRequest="30" />
-                                            
-                                            <Editor x:Name="{Binding BlockName}" Text="{Binding CodeList}" IsSpellCheckEnabled="False" FontSize="16"
-                                                    AutoSize="TextChanges" Unfocused="SaveChanges" IsVisible="False" />
 
-                                            
-                                            <Label Text="{Binding CodeList}" />
+                                        <StackLayout x:Name="{Binding BlockName}" IsVisible="False">
+                                            <Button Text="Edit" Clicked="OpenCodeEditor" CommandParameter="{Binding BlockName}"
+                                                    WidthRequest="100" HeightRequest="30" HorizontalOptions="EndAndExpand" />
+
+                                            <Button Text="Save" Clicked="SaveChanges" CommandParameter="{Binding BlockName}"
+                                                    WidthRequest="100" HeightRequest="30" HorizontalOptions="EndAndExpand" IsVisible="False" />
+
+                                            <Editor x:Name="{Binding BlockName}" Text="{Binding CodeList}" 
+                                                    IsSpellCheckEnabled="False" FontSize="16" AutoSize="TextChanges" 
+                                                    IsReadOnly="True" BackgroundColor="Transparent" />
+
+                                            <!--<Label Text="{Binding CodeList}" />-->
                                         </StackLayout>
-                                    </tool:Expander.Content>
-                                </tool:Expander>-->
-                            </Frame>
-                        </StackLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                </ListView.ItemTemplate>
+            </ListView>
 
-            <Label Text="Code Sharing Workspace" FontSize="Large" FontAttributes="Bold" TextColor="#80808073" 
-                       VerticalOptions="CenterAndExpand" 
-                       HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="background" Text="Code Sharing Workspace" FontSize="Large" FontAttributes="Bold" TextColor="#80808073" 
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

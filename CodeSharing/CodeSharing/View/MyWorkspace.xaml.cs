@@ -15,11 +15,18 @@ namespace CodeSharing.View
         {
             InitializeComponent();
 
+            ListAllBlocks();
+        }
+
+        private void ListAllBlocks()
+        {
             JsonDb db = new JsonDb();
 
             MyBlock[] block = db.ListAllBlocks();
 
             lstBlocks.ItemsSource = block;
+
+            if (block != null) background.IsVisible = false;
         }
 
         private void NewBlock(object sender, EventArgs e)
@@ -40,6 +47,8 @@ namespace CodeSharing.View
                 response = db.CreateBlock(block);
 
                 DisplayAlert(response.Item1 ? "Block Created" : "Block Not Created", response.Item2, "OK");
+
+                ListAllBlocks();
             }
         }
 
@@ -52,8 +61,12 @@ namespace CodeSharing.View
 
         private void SaveChanges(object sender, EventArgs e)
         {
-            string blockName = ((MyBlock)((Editor)sender).BindingContext).BlockName;
-            string code = ((Editor)sender).Text;
+            Button btnSave = ((Button)sender);
+            Button btnEdit = ((Button)btnSave.Parent.LogicalChildren[0]);
+            Editor editor = ((Editor)btnSave.Parent.LogicalChildren[2]);
+
+            string blockName = ((Button)sender).CommandParameter.ToString();
+            string code = editor.Text;
 
             JsonDb db = new JsonDb();
 
@@ -61,16 +74,24 @@ namespace CodeSharing.View
 
             if (!response.Item1) DisplayAlert("Code Not Changed", response.Item2, "OK");
 
-            ((Editor)sender).IsVisible = false;
-            ((Button)((Editor)sender).Parent.LogicalChildren[0]).IsVisible = false;
-            ((Label)((Editor)sender).Parent.LogicalChildren[2]).IsVisible = true;
+            btnSave.IsVisible = false;
+            btnEdit.IsVisible = true;
+
+            editor.IsReadOnly = true;
+            editor.BackgroundColor = Color.Transparent;
         }
 
         private void OpenCodeEditor(object sender, EventArgs e)
         {
-            ((Button)sender).IsVisible = false;
-            ((Editor)((Button)sender).Parent.LogicalChildren[1]).IsVisible = true;
-            ((Label)((Button)sender).Parent.LogicalChildren[2]).IsVisible = false;
+            Button btnEdit = ((Button)sender);
+            Button btnSave = ((Button)btnEdit.Parent.LogicalChildren[1]);
+            Editor editor = ((Editor)btnEdit.Parent.LogicalChildren[2]);
+
+            btnEdit.IsVisible = false;
+            btnSave.IsVisible = true;
+
+            editor.IsReadOnly = false;
+            editor.BackgroundColor = Color.Black;
         }
     }
 }
