@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:tool="http://xamarin.com/schemas/2020/toolkit"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CodeSharing.View.MyWorkspace"
              BackgroundColor="#181818">
@@ -41,7 +40,7 @@
                                         <StackLayout Orientation="Horizontal">
                                             <Label Text="{Binding BlockName}" FontSize="20" FontAttributes="Bold" TextColor="#bfbebe"
                                                     HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
-                                            <Button Text="Expand" Clicked="Expand" CommandParameter="{Binding BlockName}" WidthRequest="100" />
+                                            <Button x:Name="buttons" Text="Expand" Clicked="Expand" CommandParameter="{Binding BlockName}" WidthRequest="100" />
                                         </StackLayout>
 
                                         <StackLayout x:Name="{Binding BlockName}" IsVisible="False">
@@ -54,8 +53,6 @@
                                             <Editor x:Name="{Binding BlockName}" Text="{Binding CodeList}" 
                                                     IsSpellCheckEnabled="False" FontSize="16" AutoSize="TextChanges" 
                                                     IsReadOnly="True" BackgroundColor="Transparent" />
-
-                                            <!--<Label Text="{Binding CodeList}" />-->
                                         </StackLayout>
                                     </StackLayout>
                                 </Frame>
