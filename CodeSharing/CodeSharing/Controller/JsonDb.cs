@@ -109,6 +109,67 @@ namespace CodeSharing.Controller
             }
         }
 
+        public Tuple<bool, string> RewriteBlock(MyBlock[] blocks, string newName)
+        {
+            Tuple<bool, string> response = new Tuple<bool, string>(false, "Error: Generic");
+
+            try
+            {
+                response = FindDuplicate(newName);
+
+                if (response.Item1)
+                {
+                    if (File.Exists(FilePath))
+                    {
+                        File.WriteAllText(FilePath, JsonConvert.SerializeObject(blocks));
+
+                        response = new Tuple<bool, string>(true, "");
+                    }
+                    else
+                    {
+                        response = new Tuple<bool, string>(false, "File not found");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response = new Tuple<bool, string>(false, "Error: " + ex);
+            }
+
+            return response;
+        }
+
+        public Tuple<bool, string> RemoveBlock(string blockName)
+        {
+            Tuple<bool, string> response = new Tuple<bool, string>(false, "File Not Found");
+
+            try
+            {
+                if (File.Exists(FilePath))
+                {
+                    MyBlock[] blocks = JsonConvert.DeserializeObject<MyBlock[]>(File.ReadAllText(FilePath));
+
+                    List<MyBlock> newBlocks = blocks.Where(x => x.BlockName != blockName).ToList();
+
+                    blocks = newBlocks.ToArray();
+
+                    File.WriteAllText(FilePath, JsonConvert.SerializeObject(blocks));
+
+                    response = new Tuple<bool, string>(true, "");
+                }
+                else
+                {
+                    response = new Tuple<bool, string>(false, "File not found");
+                }
+            }
+            catch(Exception ex)
+            {
+                response = new Tuple<bool, string>(false, "Error: " + ex);
+            }
+
+            return response;
+        }
+
         public Tuple<bool, string> CodeChanges(string blockName, string code)
         {
             Tuple<bool, string> response = new Tuple<bool, string>(false, "File Not Found");

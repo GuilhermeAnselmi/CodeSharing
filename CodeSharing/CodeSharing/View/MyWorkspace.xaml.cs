@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using CodeSharing.Controller;
 using CodeSharing.Model;
@@ -15,10 +17,10 @@ namespace CodeSharing.View
         {
             InitializeComponent();
 
-            ListAllBlocks();
+            ListBlocks();
         }
 
-        private void ListAllBlocks()
+        private void ListBlocks()
         {
             JsonDb db = new JsonDb();
 
@@ -48,15 +50,17 @@ namespace CodeSharing.View
 
                 DisplayAlert(response.Item1 ? "Block Created" : "Block Not Created", response.Item2, "OK");
 
-                ListAllBlocks();
+                ListBlocks();
             }
         }
 
         private void Expand(object sender, EventArgs e)
         {
-            StackLayout objCode = (StackLayout)((Button)sender).Parent.Parent.LogicalChildren[1];
+            ImageButton btn = ((ImageButton)sender);
+            StackLayout objCode = (StackLayout)btn.Parent.Parent.LogicalChildren[1];
 
             objCode.IsVisible = !objCode.IsVisible;
+            if (objCode.IsVisible) { btn.Source = "up.png"; } else { btn.Source = "down.png"; }
         }
 
         private void SaveChanges(object sender, EventArgs e)
@@ -92,6 +96,67 @@ namespace CodeSharing.View
 
             editor.IsReadOnly = false;
             editor.BackgroundColor = Color.Black;
+        }
+
+        private void RenameBlock(object sender, EventArgs e)
+        {
+            Rename(((Button)sender).CommandParameter.ToString());
+        }
+
+        private async void Rename(string blockName)
+        {
+            string newName = await DisplayPromptAsync("Rename Block", "New Name", "Save", "Cancel",
+                "MyBlocking", -1, Keyboard.Text, "");
+
+            if (newName != null && newName != "")
+            {
+                JsonDb db = new JsonDb();
+                MyBlock[] blocks = db.ListAllBlocks();
+
+                ((MyBlock)blocks.Where(x => x.BlockName == blockName).ToList()[0]).BlockName = newName;
+
+                Tuple<bool, string> response = db.RewriteBlock(blocks, newName);
+
+                if (response.Item1)
+                {
+                    ListBlocks();
+                }
+                else
+                {
+                    DisplayAlert("Block Not Renamed", response.Item2, "OK");
+                }
+            }
+        }
+
+        private void RemoveBlock(object sender, EventArgs e)
+        {
+            Remove(((Button)sender).CommandParameter.ToString());
+        }
+
+        private async void Remove(string blockName)
+        {
+            bool remove = await DisplayAlert("Remove Block", "You where removed block " + blockName + "?", "Remove", "Cancel");
+
+            JsonDb db = new JsonDb();
+
+            if (remove)
+            {
+                Tuple<bool, string> response = db.RemoveBlock(blockName);
+
+                if (response.Item1)
+                {
+                    ListBlocks();
+                }
+                else
+                {
+                    DisplayAlert("Block Not Removed", response.Item2, "OK");
+                }
+            }
+        }
+
+        private void Dev(object sender, EventArgs e)
+        {
+            DisplayAlert("Development", "System in Development", "OK");
         }
     }
 }
